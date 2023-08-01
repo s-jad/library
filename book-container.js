@@ -1,4 +1,6 @@
-let bookArr = [];
+import { updateProgressBar } from './progressbar.js';
+
+let myLibrary = [];
 
 function Book(title, author, description, pages, pagesRead) {
     this.title = title,
@@ -17,7 +19,7 @@ function generateBookPlaceholders() {
         210,
     );
 
-    bookArr.push(bookA);
+    myLibrary.push(bookA);
 
     const bookB = new Book(
         "Lord of the Rings",
@@ -27,7 +29,7 @@ function generateBookPlaceholders() {
         567,
     );
 
-    bookArr.push(bookB);
+    myLibrary.push(bookB);
 
     const bookC = new Book(
         "The Catcher in the Rye",
@@ -37,7 +39,7 @@ function generateBookPlaceholders() {
         10,
     );
 
-    bookArr.push(bookC);
+    myLibrary.push(bookC);
 
     const bookD = new Book(
         "The Great Gatsby",
@@ -47,7 +49,7 @@ function generateBookPlaceholders() {
         46,
     );
 
-    bookArr.push(bookD);
+    myLibrary.push(bookD);
 
     const bookE = new Book(
         "The Lion, the Witch and the Wardrobe",
@@ -57,7 +59,7 @@ function generateBookPlaceholders() {
         189,
     );
 
-    bookArr.push(bookE);
+    myLibrary.push(bookE);
 
     const bookF = new Book(
         "The Lord of the Flies",
@@ -67,11 +69,25 @@ function generateBookPlaceholders() {
         224,
     );
 
-    bookArr.push(bookF);
+    myLibrary.push(bookF);
 }
 
 // Just to make it look like its already in use
 generateBookPlaceholders();
+
+function addBookToLibrary(title, author, description, pages, pagesRead) {
+    const newBook = new Book(
+        title,
+        author,
+        description,
+        pages,
+        pagesRead,
+    );
+
+    myLibrary.push(newBook);
+};
+
+// ADD BOOK MODAL 
 
 const addBookBtn = document.getElementById('add-book-button');
 const addBookModal = document.getElementById('add-book-modal');
@@ -93,5 +109,58 @@ cancelAddBookBtn.addEventListener("click", function() {
 
 // Add the book to the library
 confirmAddBookBtn.addEventListener("click", function() {
-    console.log("Added Book!");
+    const bookGrid = document.getElementById('book-grid');
+
+    // Generate new book card
+    const bookCard = document.createElement('div');
+    bookCard.classList.add('book-card');
+
+    // Get the values from the inputs
+    const bookTitle = document.getElementById('add-book-title').value;
+    const bookAuthor = document.getElementById('add-book-author').value;
+    const bookDescription = document.getElementById('add-book-description').value;
+    const numberPages = document.getElementById('add-number-pages').value;
+    const pagesRead = document.getElementById('add-pages-read').value;
+
+    // Add the new book to the library
+    addBookToLibrary(bookTitle, bookAuthor, bookDescription, numberPages, pagesRead);
+
+    // Fill new book card with values
+    bookCard.innerHTML = `
+        <h3 class="book-title collapsed">${bookTitle}</h3>
+        <h4 class="author">- ${bookAuthor}</h4>
+        <p class="book-description collapsed">${bookDescription}</p>
+        <p>Pages: <strong class="number-of-pages">${numberPages}</strong></p>
+        <input placeholder="Number of pages read" type="number" class="input-pages-read">
+        <p>Pages read: <strong class="pages-read">${pagesRead}</strong></p>
+        <div class="card-actions-grid">
+            <div class="progress-bar"></div>
+            <div class="progress-bar-bg"></div>
+            <div class="delete-book-button"></div>
+        </div>
+    `;
+
+    // Update the progress bar to the correct width
+    const progressBar = bookCard.querySelector('.progress-bar');
+    updateProgressBar(progressBar);
+
+    // Add event listener to the new input-pages-read
+    const numberPagesReadInput = bookCard.querySelector('input');
+    numberPagesReadInput.addEventListener('keypress', function(e) {
+        if (e.key === "Enter") {
+            // Find the associated pagesRead and progress bar and update them 
+            const currentCard = numberPagesReadInput.parentNode;
+            const currentPagesRead = currentCard.querySelector('.pages-read');
+            currentPagesRead.innerText = numberPagesReadInput.value;
+            const progressBar = currentCard.querySelector('.progress-bar');
+            updateProgressBar(progressBar);
+        }
+    });
+
+    // Append the finished book card to the grid
+    bookGrid.appendChild(bookCard);
+
+    // Close the modal
+    addBookModal.classList.remove('active');
+    addBookModalGrid.classList.add('fade');
 });
