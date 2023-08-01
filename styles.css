@@ -207,6 +207,7 @@ button {
 
     height: 250px;
     display: grid;
+    grid-template-rows: min-content;
     align-items: center;
     justify-content: center;
     padding: 1rem;
@@ -218,6 +219,11 @@ button {
     text-overflow: ellipsis;
 }
 
+.author {
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+}
+
 .book-description.collapsed {
     height: 3ch;
     white-space: nowrap;
@@ -226,6 +232,7 @@ button {
 }
 
 .card-actions-grid {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr min-content;
     align-items: center;
@@ -247,9 +254,26 @@ button {
 }
 
 .progress-bar {
-    background: red;
+    position: relative;
+    z-index: 2;
+    --hue: var(--base-hue);
+    background: hsl(var(--base-hue), var(--desaturated), var(--mid));
     border-radius: 9999px;
-    width: 100%;
+    width: 40%;
+    height: 10px;
+}
+
+.progress-bar-bg {
+    --hue: var(--base-hue);
+    background: hsl(var(--base-hue), var(--desaturated), var(--light));
+    
+    position: absolute;
+    content: "";
+
+    border-radius: 9999px;
+    top: 6px;
+    left: 0;
+    width: 90%;
     height: 10px;
 }
 
