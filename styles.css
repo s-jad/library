@@ -140,9 +140,9 @@ button {
     color: hsl(var(--txt-hue), var(--desaturated), var(--light));
 
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 5fr 1fr;
     margin: 1rem 1rem 0 1rem;
-    padding: 1rem;
+    padding: max(10px, 1rem);
     border-radius: 1rem 1rem 0 0;
     width: 100%;
     height: 95%;
@@ -174,8 +174,8 @@ button {
     --bg-hue: var(--base-hue);
     background: hsl(var(--bg-hue), var(--desaturated), var(--light));
 
-    height: 100%;
     padding: 0 1rem;
+    height: max(570px, 100%);
 }
 
 #book-grid {
@@ -188,17 +188,51 @@ button {
     grid-template-columns: 1fr 1fr 1fr;
     grid-auto-columns: 1fr 1fr 1fr;
     gap: 1.5rem;
-    padding: 1rem;
-    height: 100%;
+    padding: max(8px, 1rem);
+    height: max(570px, 100%);
+}
+
+#book-grid-title-flex {
+    grid-column: 1 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 2rem;
 }
 
 #book-grid-title {
-    grid-column: 1 / 4;
     --txt-hue: calc(var(--base-hue) + 120);
     color: hsl(var(--txt-hue), var(--desaturated), var(--light));
-    margin-left: 2rem;
 }
 
+#add-book-button {
+    background-image: url(./icons/add.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: invert(100%);
+    height: 22px;
+    width: 22px;
+}
+
+#add-book-button,
+.delete-book-button,
+button {
+    scale: 1;
+    transition: scale 150ms ease-in-out;
+    cursor: pointer;
+}
+
+#add-book-button:hover,
+.delete-book-button:hover,
+#add-book-button:focus-within,
+.delete-book-button:focus-within {
+    scale: 1.2;
+}
+
+button:hover,
+button:focus-within {
+    scale: 1.1;
+}
 .book-card {
     --hue: calc(var(--base-hue) + 60);
     background: hsl(var(--hue), var(--saturated), var(--light));
@@ -259,8 +293,9 @@ button {
     --hue: var(--base-hue);
     background: hsl(var(--base-hue), var(--desaturated), var(--mid));
     border-radius: 9999px;
-    width: 40%;
+    width: 0;
     height: 10px;
+    transition: width 300ms ease-in-out; 
 }
 
 .progress-bar-bg {
@@ -281,4 +316,86 @@ button {
 
 #footer-container {
     height: 10svh;
+}
+
+/* ADD BOOK MODAL */
+
+#add-book-modal {
+    position: fixed;
+    display: none;
+    height: 0;
+    width: 0;
+    top: 0;
+    left: 0;
+    background: transparent;
+    opacity: 0;
+    z-index: 1000;
+    transition: opacity 300ms ease-in-out,
+                height 300ms ease-in-out,
+                width 300ms ease-in-out;
+}
+
+#add-book-modal.active {
+    --bg-hue: var(--base-hue);
+    background: hsla(var(--bg-hue), var(--desaturated), var(--dark), 0.9);
+
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+#add-book-modal-grid {
+    --bg-hue: var(--base-hue);
+    background: hsl(var(--bg-hue), var(--saturated), var(--light));
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr 1fr 3fr 1fr 1fr;
+    gap: 2rem;
+    padding: 3rem;
+    width: 70vw;
+    height: auto;
+    border-radius: 1rem;
+}
+
+#add-book-modal-grid.fade {
+    display: none;
+}
+
+.modal-title {
+    grid-column: 1 / 7;
+    text-align: center;
+}
+
+#add-book-modal-grid > label {
+    grid-column: 1 / 4;
+}
+
+#add-book-modal-grid > input {
+    grid-column: 4 / 7;
+}
+
+#add-book-modal-grid > textarea {
+    grid-column: 4 / 7;
+    resize: none;
+    height: 100%;
+    width: 100%;
+}
+
+#add-book-modal-grid > button {
+    --bg-hue: var(--base-hue);
+    background: hsl(var(--bg-hue), var(--desaturated), var(--dark));
+    color: hsl(var(--bg-hue), var(--desaturated), var(--light));
+    width: 100%;
+}
+
+#confirm-add-book-button {
+    grid-column: 2 / 4;
+}
+
+#cancel-add-book-button {
+    grid-column: 4 / 6;
 }
