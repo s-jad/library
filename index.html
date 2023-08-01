@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <script src="book-container.js" defer></script>
-    <script src="progressbar.js" defer></script>
+    <script type="module" src="book-container.js" defer></script>
+    <script type="module" src="progressbar.js" defer></script>
     <script src="buttons.js" defer></script>
     <title>Library</title>
 </head>
@@ -121,13 +121,13 @@
         <div id="add-book-modal-grid">
             <h3 class="modal-title">Add a book</h3>
             <label for="add-book-title">Title:</label>
-            <input id="add-book-title" name="add-book-title" type="text">
+            <input id="add-book-title" name="add-book-title" type="text" required>
             <label for="add-book-author">Author:</label>
-            <input id="add-book-author" name="add-book-author" type="text">
+            <input id="add-book-author" name="add-book-author" type="text" required>
             <label for="add-book-description">Description:</label>
             <textarea id="add-book-description" name="add-book-description" row="5" col="45"></textarea>
             <label for="add-number-pages">Number of pages:</label>
-            <input id="add-number-pages" name="add-number-pages" type="number">
+            <input id="add-number-pages" name="add-number-pages" type="number" required>
             <label for="add-pages-read">Pages read:</label>
             <input id="add-pages-read" name="add-pages-read" type="number">
             <button type="button" id="confirm-add-book-button">Add Book</button>
