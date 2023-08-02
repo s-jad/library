@@ -14,11 +14,7 @@ export function updateProgressBar(bar, index, array) {
         percentageRead = 100;
     }
 
-    // Get the width of the progress bar background
-    const progressBarBg = document.querySelector('.progress-bar-bg');
-    const rect = progressBarBg.getBoundingClientRect();
-    const progressBarBgWidth = rect.width;
-
+    // Progress bar turns green when full
     if (percentageRead === 100) {
         bar.classList.add('full');
     } else {
@@ -26,7 +22,7 @@ export function updateProgressBar(bar, index, array) {
     }
 
     // Calculate the fraction of the background to fill with the progress bar
-    bar.style.width = `${(progressBarBgWidth / 100) * percentageRead}px`;
+    bar.style.width = `${percentageRead}%`;
 };
 
 // Initial progress bar update
@@ -49,8 +45,3 @@ Array.from(inputPagesRead).forEach(input => {
     });
 });
 
-// Change the progress bar size if the screen size changes
-window.addEventListener('resize', function() {
-    const progressBars = document.querySelectorAll('.progress-bar');
-    Array.from(progressBars).forEach(updateProgressBar);
-});
