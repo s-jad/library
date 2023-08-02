@@ -2,7 +2,7 @@ import { myLibrary, populateBookGrid } from "./book-container.js";
 
 const searchBar = document.getElementById('searchbar');
 const bookGrid = document.getElementById('book-grid');
-const books = Array.from(bookGrid.querySelectorAll('book-card'));
+const books = Array.from(bookGrid.querySelectorAll('.book-card'));
 
 function findMatches(wordToMatch, library) {
     return library.filter((books) => {
@@ -12,20 +12,28 @@ function findMatches(wordToMatch, library) {
 };
 
 function displayMatches() {
-    let matches = findMatches(this.value, myLibrary);
+    // Get list of book titles that match the regex in input
+    const matches = findMatches(this.value, myLibrary);
 
-    const currentBookGrid = document.getElementById('book-grid');
-    const currentlyDisplayedBooks = currentBookGrid.querySelectorAll('.book-card');
+    const currentlyDisplayedBooks = Array.from(document.querySelectorAll('.book-title'));
 
-    currentlyDisplayedBooks.forEach((displayedBook) => {
-        const bookTitle = displayedBook.querySelector('.book-title').innerText;
+    // For each book in the static array of books (unchanged by node removal and appending)
+    books.forEach((targetBook) => {
+        const bookTitle = targetBook.querySelector('.book-title').innerText;
         const match = matches.some((match) => match.title === bookTitle)
 
-        if (!match) {
-            bookGrid.removeChild(displayedBook);
+        if (!match && currentlyDisplayedBooks.some((title) => title.innerText === bookTitle)) {
+            // If not in matches and currently displayed, then remove from bookGrid
+            console.log(`Removing ${bookTitle}`);
+            bookGrid.removeChild(targetBook);
+        } else if (match && !currentlyDisplayedBooks.some((title) => title.innerText === bookTitle)) {
+            // If in matches and not currently displayed, then append to bookGrid
+            console.log(`Appending ${bookTitle}`);
+            bookGrid.appendChild(targetBook);
         }
     });
 
+    // If nothing is in the searchbar input, show all books
     if (matches.length === 0 || searchBar.value === "") {
         populateBookGrid(myLibrary);
     }
