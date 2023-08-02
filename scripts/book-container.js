@@ -113,7 +113,7 @@ export function populateBookGrid(library) {
             // Fill new book card with values
             bookCard.innerHTML = `
                 <h3 class="book-title collapsed">${book.title}</h3>
-                <h4 class="author">- ${book.author}</h4>
+                <h4 class="author">${book.author}</h4>
                 <p class="book-description collapsed">${book.description}</p>
                 <p>Pages: <strong class="number-of-pages">${book.pages}</strong></p>
                 <input placeholder="Number of pages read" type="number" class="input-pages-read">
@@ -183,7 +183,10 @@ confirmAddBookBtn.addEventListener("click", function() {
     const bookAuthor = document.getElementById('add-book-author').value;
     const bookDescription = document.getElementById('add-book-description').value;
     const numberPages = document.getElementById('add-number-pages').value;
-    const pagesRead = document.getElementById('add-pages-read').value;
+
+    // If no value is given for pagesRead then default to 0
+    const pagesReadInput = document.getElementById('add-pages-read');
+    const pagesRead = pagesReadInput.value !== '' ? pagesReadInput.value : '0';
 
     // Add the new book to the library
     addBookToLibrary(bookTitle, bookAuthor, bookDescription, numberPages, pagesRead);
@@ -191,7 +194,7 @@ confirmAddBookBtn.addEventListener("click", function() {
     // Fill new book card with values
     bookCard.innerHTML = `
         <h3 class="book-title collapsed">${bookTitle}</h3>
-        <h4 class="author">- ${bookAuthor}</h4>
+        <h4 class="author">${bookAuthor}</h4>
         <p class="book-description collapsed">${bookDescription}</p>
         <p>Pages: <strong class="number-of-pages">${numberPages}</strong></p>
         <input placeholder="Number of pages read" type="number" class="input-pages-read">
@@ -218,6 +221,23 @@ confirmAddBookBtn.addEventListener("click", function() {
             const progressBar = currentCard.querySelector('.progress-bar');
             updateProgressBar(progressBar);
         }
+    });
+
+    // Add event listener to the new delete-book-button
+    const newDeleteBookBtn = bookCard.querySelector('.delete-book-button');
+    newDeleteBookBtn.addEventListener('click', function() {
+        // Get the current book to be deleted
+        const bookToDelete = btn.parentNode.parentNode;
+        currentBookToDelete = bookToDelete;
+
+        // Get the title to ask the user if they are sure they want to delete
+        const bookTitle = bookToDelete.querySelector('.book-title').innerText;
+        const questionDeletion = document.getElementById('question-deletion');
+        questionDeletion.innerText = `Are you sure you want to delete ${bookTitle}?`;
+
+        // Display the delete-book-modal
+        deleteBookModal.classList.add('active');
+        deleteBookModalGrid.classList.remove('fade');
     });
 
     // Append the finished book card to the grid
