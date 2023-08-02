@@ -88,6 +88,17 @@ function addBookToLibrary(title, author, description, pages, pagesRead) {
     myLibrary.push(newBook);
 };
 
+function removeBookFromLibrary(title, author) {
+    const bookIndex = myLibrary.findIndex(book => {
+        book.title === title && book.author === author
+    });
+
+    // If findIndex can't find the book it returns -1
+    if (!bookIndex !== -1) {
+        myLibrary.splice(bookIndex, 1);
+    }
+}
+
 export function populateBookGrid(library) {
     const bookTitles = Array.from(document.querySelectorAll('.book-title'));
 
@@ -216,3 +227,58 @@ confirmAddBookBtn.addEventListener("click", function() {
     addBookModal.classList.remove('active');
     addBookModalGrid.classList.add('fade');
 });
+
+// DELETE BOOK FROM LIBRARY
+
+const deleteBookBtns = document.querySelectorAll('.delete-book-button');
+const deleteBookModal = document.getElementById('delete-book-modal');
+const deleteBookModalGrid = document.getElementById('delete-book-modal-grid');
+const confirmDeleteBookBtn = document.getElementById('confirm-delete-book-button');
+const cancelDeleteBookBtn = document.getElementById('cancel-delete-book-button');
+
+let currentBookToDelete;
+
+// Open the delete-book-modal
+deleteBookBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        // Get the current book to be deleted
+        const bookToDelete = btn.parentNode.parentNode;
+        currentBookToDelete = bookToDelete;
+
+        // Get the title to ask the user if they are sure they want to delete
+        const bookTitle = bookToDelete.querySelector('.book-title').innerText;
+        const questionDeletion = document.getElementById('question-deletion');
+        questionDeletion.innerText = `Are you sure you want to delete ${bookTitle}?`;
+
+        // Display the delete-book-modal
+        deleteBookModal.classList.add('active');
+        deleteBookModalGrid.classList.remove('fade');
+    });
+});
+
+// Close the delete-book-modal
+cancelDeleteBookBtn.addEventListener("click", function() {
+    deleteBookModal.classList.remove('active');
+    deleteBookModalGrid.classList.add('fade');
+});
+
+// Delete the book from myLibrary and the bookGrid
+confirmDeleteBookBtn.addEventListener('click', function() {
+    // Get the parent book-card node, title and author for removal
+    const bookToDelete = currentBookToDelete;
+    const bookTitle = bookToDelete.querySelector('.book-title').innerText;
+    const bookAuthor = bookToDelete.querySelector('.author').innerText;
+
+    // Delete the book from myLibrary
+    removeBookFromLibrary(bookTitle, bookAuthor);
+    console.log(myLibrary);
+
+    // Remove the book from the bookGrid
+    bookGrid.removeChild(bookToDelete);
+
+    // Close the delete-book-modal
+    deleteBookModal.classList.remove('active');
+    deleteBookModalGrid.classList.add('fade');
+});
+
+

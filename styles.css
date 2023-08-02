@@ -88,6 +88,7 @@ select {
     --dark: 10%;
     --saturated: 80%;
     --desaturated: 20%;
+    --fully-desaturated: 5%;
 }
 
 /* ELEMENT STYLING */
@@ -210,8 +211,8 @@ button {
     background-size: cover;
     background-repeat: no-repeat;
     filter: invert(100%);
-    height: 22px;
-    width: 22px;
+    height: max(22px, 3rem);
+    width: max(22px, 3rem);
 }
 
 #add-book-button,
@@ -233,6 +234,7 @@ button:hover,
 button:focus-within {
     scale: 1.1;
 }
+
 .book-card {
     --hue: calc(var(--base-hue) + 60);
     background: hsl(var(--hue), var(--saturated), var(--light));
@@ -242,8 +244,8 @@ button:focus-within {
     height: 250px;
     display: grid;
     grid-template-rows: min-content;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
+    justify-content: stretch;
     padding: 1rem;
 }
 
@@ -254,7 +256,8 @@ button:focus-within {
 }
 
 .author {
-    padding-left: 1rem;
+    --txt-hue: var(--base-hue);
+    color: hsla(var(--txt-hue), var(--fully-desaturated), var(--mid));
     padding-bottom: 1rem;
 }
 
@@ -298,6 +301,11 @@ button:focus-within {
     transition: width 300ms ease-in-out; 
 }
 
+.progress-bar.full {
+    --hue: calc(var(--base-hue) + 180);
+    background: hsl(var(--hue), var(--desaturated), var(--mid));
+}
+
 .progress-bar-bg {
     --hue: var(--base-hue);
     background: hsl(var(--base-hue), var(--desaturated), var(--light));
@@ -306,7 +314,7 @@ button:focus-within {
     content: "";
 
     border-radius: 9999px;
-    top: 6px;
+    top: 9px;
     left: 0;
     width: 90%;
     height: 10px;
@@ -318,9 +326,10 @@ button:focus-within {
     height: 10svh;
 }
 
-/* ADD BOOK MODAL */
+/* ADD AND DELETE BOOK MODALS */
 
-#add-book-modal {
+#add-book-modal,
+#delete-book-modal {
     position: fixed;
     display: none;
     height: 0;
@@ -330,12 +339,11 @@ button:focus-within {
     background: transparent;
     opacity: 0;
     z-index: 1000;
-    transition: opacity 300ms ease-in-out,
-                height 300ms ease-in-out,
-                width 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
 }
 
-#add-book-modal.active {
+#add-book-modal.active,
+#delete-book-modal.active {
     --bg-hue: var(--base-hue);
     background: hsla(var(--bg-hue), var(--desaturated), var(--dark), 0.9);
 
@@ -347,21 +355,32 @@ button:focus-within {
     opacity: 1;
 }
 
-#add-book-modal-grid {
+#add-book-modal-grid,
+#delete-book-modal-grid {
     --bg-hue: var(--base-hue);
     background: hsl(var(--bg-hue), var(--saturated), var(--light));
 
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 1fr 1fr 1fr 3fr 1fr 1fr;
     gap: 2rem;
     padding: 3rem;
-    width: 70vw;
-    height: auto;
     border-radius: 1rem;
+    height: auto;
 }
 
-#add-book-modal-grid.fade {
+#add-book-modal-grid {
+    grid-template-rows: 1fr 1fr 1fr 3fr 1fr 1fr;
+    width: 70vw;
+}
+
+
+#delete-book-modal-grid {
+    grid-template-rows: 1fr 1fr;
+    width: 50vw;
+}
+
+#add-book-modal-grid.fade,
+#delete-book-modal-grid.fade {
     display: none;
 }
 
@@ -385,17 +404,20 @@ button:focus-within {
     width: 100%;
 }
 
-#add-book-modal-grid > button {
+#add-book-modal-grid > button,
+#delete-book-modal-grid > button {
     --bg-hue: var(--base-hue);
     background: hsl(var(--bg-hue), var(--desaturated), var(--dark));
     color: hsl(var(--bg-hue), var(--desaturated), var(--light));
     width: 100%;
 }
 
-#confirm-add-book-button {
+#confirm-add-book-button,
+#confirm-delete-book-button {
     grid-column: 2 / 4;
 }
 
-#cancel-add-book-button {
+#cancel-add-book-button,
+#cancel-delete-book-button {
     grid-column: 4 / 6;
 }
