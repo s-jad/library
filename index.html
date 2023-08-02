@@ -21,11 +21,11 @@
     </div>
    </header>
     <div id="book-container">
+        <div id="book-grid-title-flex">
+            <h3 id="book-grid-title">Current Books:</h3>
+            <div id="add-book-button"></div>
+        </div>
         <div id="book-grid">
-            <div id="book-grid-title-flex">
-                <h3 id="book-grid-title">Current Books:</h3>
-                <div id="add-book-button"></div>
-            </div>
             <div class="book-card">
                 <h3 class="book-title collapsed">1984</h3>
                 <h4 class="author">George Orwell</h4>
@@ -120,16 +120,16 @@
     <div id="add-book-modal">
         <div id="add-book-modal-grid">
             <h3 class="modal-title">Add a book</h3>
-            <label for="add-book-title">Title:</label>
+            <label for="add-book-title"><strong id="required-fields">*</strong> Title:</label>
             <input id="add-book-title" name="add-book-title" type="text" required>
-            <label for="add-book-author">Author:</label>
+            <label for="add-book-author"><strong id="required-fields">*</strong> Author:</label>
             <input id="add-book-author" name="add-book-author" type="text" required>
             <label for="add-book-description">Description:</label>
             <textarea id="add-book-description" name="add-book-description" row="5" col="45"></textarea>
-            <label for="add-number-pages">Number of pages:</label>
+            <label for="add-number-pages"><strong id="required-fields">*</strong> Number of pages:</label>
             <input id="add-number-pages" name="add-number-pages" type="number" required>
             <label for="add-pages-read">Pages read:</label>
-            <input id="add-pages-read" name="add-pages-read" type="number">
+            <input id="add-pages-read" name="add-pages-read" type="number" value="0">
             <button type="button" id="confirm-add-book-button">Add Book</button>
             <button type="button" id="cancel-add-book-button">Cancel</button>
         </div>
