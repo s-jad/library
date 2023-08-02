@@ -227,7 +227,7 @@ confirmAddBookBtn.addEventListener("click", function() {
     const newDeleteBookBtn = bookCard.querySelector('.delete-book-button');
     newDeleteBookBtn.addEventListener('click', function() {
         // Get the current book to be deleted
-        const bookToDelete = btn.parentNode.parentNode;
+        const bookToDelete = newDeleteBookBtn.parentNode.parentNode;
         currentBookToDelete = bookToDelete;
 
         // Get the title to ask the user if they are sure they want to delete
@@ -291,7 +291,6 @@ confirmDeleteBookBtn.addEventListener('click', function() {
 
     // Delete the book from myLibrary
     removeBookFromLibrary(bookTitle, bookAuthor);
-    console.log(myLibrary);
 
     // Remove the book from the bookGrid
     bookGrid.removeChild(bookToDelete);
