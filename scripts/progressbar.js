@@ -1,27 +1,21 @@
 // PROGRESS BAR
 const progressBars = document.getElementsByClassName('progress-bar');
 const inputPagesRead = document.getElementsByClassName('input-pages-read');
-//
-// Get the width of the progress bar background
-const progressBarBg = document.getElementsByClassName('progress-bar-bg')[0];
-const rect = progressBarBg.getBoundingClientRect();
-const progressBarBgWidth = rect.width;
 
 export function updateProgressBar(bar, index, array) {
     const currentCard = bar.parentNode.parentNode;
-    const pagesRead = parseInt(currentCard.getElementsByClassName('pages-read')[0].innerText);
-    const numberOfPages = parseInt(currentCard.getElementsByClassName('number-of-pages')[0].innerText);
+    const pagesRead = parseInt(currentCard.querySelector('.pages-read').innerText);
+    const numberOfPages = parseInt(currentCard.querySelector('.number-of-pages').innerText);
 
     let percentageRead = (pagesRead / numberOfPages) * 100;
 
-    // Check if the pagesRead makes sense
+    // Check if the pagesRead makes sense, stop overflow if not
     if (percentageRead > 100) {
         percentageRead = 100;
     }
 
-
     // Get the width of the progress bar background
-    const progressBarBg = document.getElementsByClassName('progress-bar-bg')[0];
+    const progressBarBg = document.querySelector('.progress-bar-bg');
     const rect = progressBarBg.getBoundingClientRect();
     const progressBarBgWidth = rect.width;
 
@@ -48,7 +42,15 @@ Array.from(inputPagesRead).forEach(input => {
             currentPagesRead.innerText = input.value;
             const progressBar = currentCard.querySelector('.progress-bar');
             updateProgressBar(progressBar);
+
+            // Clear the input value
+            input.value = "";
         }
     });
 });
 
+// Change the progress bar size if the screen size changes
+window.addEventListener('resize', function() {
+    const progressBars = document.querySelectorAll('.progress-bar');
+    Array.from(progressBars).forEach(updateProgressBar);
+});
