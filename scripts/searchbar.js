@@ -1,8 +1,7 @@
-import { myLibrary, populateBookGrid } from "./book-container.js";
+import { books, myLibrary, populateBookGrid } from "./book-container.js";
 
 const searchBar = document.getElementById('searchbar');
 const bookGrid = document.getElementById('book-grid');
-const books = Array.from(bookGrid.querySelectorAll('.book-card'));
 
 function findMatches(wordToMatch, library) {
     return library.filter((books) => {
@@ -24,11 +23,9 @@ function displayMatches() {
 
         if (!match && currentlyDisplayedBooks.some((title) => title.innerText === bookTitle)) {
             // If not in matches and currently displayed, then remove from bookGrid
-            console.log(`Removing ${bookTitle}`);
             bookGrid.removeChild(targetBook);
         } else if (match && !currentlyDisplayedBooks.some((title) => title.innerText === bookTitle)) {
             // If in matches and not currently displayed, then append to bookGrid
-            console.log(`Appending ${bookTitle}`);
             bookGrid.appendChild(targetBook);
         }
     });
