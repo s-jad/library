@@ -126,7 +126,6 @@ button {
     --bg-hue: var(--base-hue);
     background: hsl(var(--bg-hue), var(--desaturated), var(--light));
 
-    position: sticky;
     height: 30svh;
     width: 100%;
     display: flex;
@@ -183,7 +182,6 @@ button {
 
     display: grid;
     min-height: calc(60svh - 2rem);
-    grid-template-rows: 1fr;
     grid-auto-rows: 1fr;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
@@ -210,8 +208,8 @@ button {
     background-size: cover;
     background-repeat: no-repeat;
     filter: invert(100%);
-    height: max(22px, 3rem);
-    width: max(22px, 3rem);
+    height: clamp(22px, 3rem, 30px);
+    width: clamp(22px, 3rem, 30px);
 }
 
 #add-book-button,
@@ -244,11 +242,11 @@ button:focus-within {
     align-items: stretch;
     justify-content: stretch;
     padding: 1rem;
-    max-height: 400px;
+    max-height: 300px;
 }
 
 .book-card > *:not(:first-child):not(:last-child) {
-    margin-bottom: 1rem;
+    margin-bottom: min(8px, 1rem);
 }
 
 .author {
@@ -258,11 +256,23 @@ button:focus-within {
     margin-left: 2rem;
 }
 
-.book-description.collapsed {
-    height: 3ch;
+.book-description {
+    height: 5ch;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.description-modal {
+    --bg-hue: var(--base-hue);
+    background: hsl(var(--bg-hue), var(--saturated), var(--light));
+    text-align: center;
+    padding: 2rem 1rem;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 3px hsl(var(--bg-hue), var(--desaturated), var(--dark));
+    z-index: 10;
+    max-width: max(40vw, 250px);
 }
 
 .card-actions-grid {
@@ -278,8 +288,8 @@ button:focus-within {
     background-image: url(./icons/delete.png);
     background-size: cover;
     background-repeat: no-repeat;
-    height: 22px;
-    width: 22px;
+    height: clamp(22px, 3rem, 30px);
+    width: clamp(22px, 3rem, 30px);
 }
 
 .input-pages-read {
@@ -311,7 +321,7 @@ button:focus-within {
     content: "";
 
     border-radius: 9999px;
-    top: 37%;
+    top: 32%;
     left: 0;
     width: 90%;
     height: 10px;
@@ -367,8 +377,9 @@ button:focus-within {
     background: hsla(var(--bg-hue), var(--desaturated), var(--dark), 0.9);
 
     display: flex;
-    height: 100vh;
-    width: 100vw;
+    flex-direction: column;
+    height: 100svh;
+    width: 100svw;
     align-items: center;
     justify-content: center;
     opacity: 1;
@@ -389,7 +400,7 @@ button:focus-within {
 
 #add-book-modal-grid {
     grid-template-rows: 1fr 1fr 1fr 3fr 1fr 1fr;
-    width: 70vw;
+    width: 70svw;
     max-height: 90svh;
 }
 
@@ -456,4 +467,40 @@ button:focus-within {
 #cancel-add-book-button,
 #cancel-delete-book-button {
     grid-column: 4 / 6;
+}
+
+@media (max-width: 450px) { 
+       #add-book-modal.active,
+       #delete-book-modal.active {
+           align-items: center;
+           justify-content: start;
+           padding-top: 10%;
+       }
+
+       #add-book-modal-grid,
+       #delete-book-modal-grid {
+           width: 95svw;
+           height: auto;
+       }
+
+       #add-book-modal-grid {
+           grid-template-columns: 1fr 1fr;
+           grid-template-rows: 1fr;
+       }
+
+       #add-book-modal-grid > *:not(button) {
+            grid-column: 1 /3;
+       }
+
+       #add-book-modal-grid > button {
+           margin-top: 1rem;
+       }
+
+       #confirm-add-book-button {
+           grid-column: 1 / 2;
+       }
+
+       #cancel-add-book-button {
+           grid-column: 2 / 3;
+       }
 }
