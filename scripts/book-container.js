@@ -112,20 +112,22 @@ export function populateBookGrid(library) {
             bookCard.classList.add('book-card');
 
             // Fill new book card with values
+
             bookCard.innerHTML = `
                 <h3 class="book-title collapsed">${book.title}</h3>
                 <h4 class="author">${book.author}</h4>
                 <p class="book-description collapsed">${book.description}</p>
-                <p>Pages: <strong class="number-of-pages">${book.pages}</strong></p>
-                <input placeholder="Number of pages read" type="number" class="input-pages-read">
-                <p>Pages read: <strong class="pages-read">${book.pagesRead}</strong></p>
+                <input placeholder="Number of pages read" name="input-pages-read" type="number" class="input-pages-read">
+                <p>Pages read: 
+                    <span class="pages-read">${book.pagesRead}</span> / 
+                    <span class="number-of-pages">${book.pages}</span>
+                </p>
                 <div class="card-actions-grid">
-                <div class="progress-bar"></div>
-                <div class="progress-bar-bg"></div>
-                <div class="delete-book-button"></div>
+                    <div class="progress-bar"></div>
+                    <div class="progress-bar-bg"></div>
+                    <div class="delete-book-button"></div>
                 </div>
-                `;
-
+            `;
 
             // Append the finished book card to the grid
             bookGrid.appendChild(bookCard);
@@ -197,9 +199,8 @@ confirmAddBookBtn.addEventListener("click", function() {
         <h3 class="book-title collapsed">${bookTitle}</h3>
         <h4 class="author">${bookAuthor}</h4>
         <p class="book-description collapsed">${bookDescription}</p>
-        <p>Pages: <strong class="number-of-pages">${numberPages}</strong></p>
-        <input placeholder="Number of pages read" type="number" class="input-pages-read">
-        <p>Pages read: <strong class="pages-read">${pagesRead}</strong></p>
+        <input placeholder="Number of pages read" name="input-pages-read" type="number" class="input-pages-read">
+        <p>Pages read: <span class="pages-read">${pagesRead}</span> / <span class="number-of-pages">${numberPages}</span></p>
         <div class="card-actions-grid">
             <div class="progress-bar"></div>
             <div class="progress-bar-bg"></div>
