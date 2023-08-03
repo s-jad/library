@@ -3,7 +3,6 @@ import { updateProgressBar } from './progressbar.js';
 export let myLibrary = [];
 const bookGrid = document.getElementById('book-grid');
 
-
 function Book(title, author, description, pages, pagesRead) {
     this.title = title,
         this.author = author,
@@ -138,7 +137,7 @@ export function populateBookGrid(library) {
             bookCard.innerHTML = `
                 <h3 class="book-title collapsed">${book.title}</h3>
                 <h4 class="author">${book.author}</h4>
-                <p class="book-description collapsed">${book.description}</p>
+                <p class="book-description">${book.description}</p>
                 <input placeholder="Number of pages read" name="input-pages-read" type="number" class="input-pages-read">
                 <p>Pages read: 
                     <span class="pages-read">${book.pagesRead}</span> / 
@@ -202,11 +201,12 @@ confirmAddBookBtn.addEventListener("click", function() {
     const bookCard = document.createElement('div');
     bookCard.classList.add('book-card');
 
-    // Get the values from the inputs
+    // Get the required values from the inputs
     const bookTitle = document.getElementById('add-book-title').value;
     const bookAuthor = document.getElementById('add-book-author').value;
-    const bookDescription = document.getElementById('add-book-description').value;
     const numberPages = document.getElementById('add-number-pages').value;
+
+    const bookDescription = document.getElementById('add-book-description').value;
 
     // If no value is given for pagesRead then default to 0
     const pagesReadInput = document.getElementById('add-pages-read');
@@ -219,7 +219,7 @@ confirmAddBookBtn.addEventListener("click", function() {
     bookCard.innerHTML = `
         <h3 class="book-title collapsed">${bookTitle}</h3>
         <h4 class="author">${bookAuthor}</h4>
-        <p class="book-description collapsed">${bookDescription}</p>
+        <p class="book-description">${bookDescription}</p>
         <input placeholder="Number of pages read" name="input-pages-read" type="number" class="input-pages-read">
         <p>Pages read: <span class="pages-read">${pagesRead}</span> / <span class="number-of-pages">${numberPages}</span></p>
         <div class="card-actions-grid">
@@ -263,12 +263,41 @@ confirmAddBookBtn.addEventListener("click", function() {
         deleteBookModalGrid.classList.remove('fade');
     });
 
+    // Add event listener to the new book-description
+    const description = bookCard.querySelector('.book-description');
+    description.addEventListener('mouseover', function(e) {
+        const bookDescription = description.innerText;
+
+        // Create the description modal with the full description text
+        const descriptionModal = document.createElement('div');
+        descriptionModal.classList.add('description-modal');
+        descriptionModal.innerHTML = `
+           <p class="description-modal-text">${bookDescription}</p> 
+        `;
+
+        // Get the current mouse position
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        // Fix the modal to the current mouse position
+        descriptionModal.style.position = "fixed";
+        descriptionModal.style.top = `${mouseY}px`;
+        descriptionModal.style.left = `${mouseX}px`;
+
+        document.body.appendChild(descriptionModal);
+
+        // Remove the modal once the mouse leaves the description element
+        description.addEventListener('mouseleave', function() {
+            descriptionModal.remove();
+        });
+    });
+
+
     // Append the finished book card to the grid
     bookGrid.appendChild(bookCard);
 
     // Add bookCard to books array
     books.push(bookCard);
-    console.log(books);
 
     // Close the modal
     addBookModal.classList.remove('active');
@@ -326,5 +355,4 @@ confirmDeleteBookBtn.addEventListener('click', function() {
     deleteBookModal.classList.remove('active');
     deleteBookModalGrid.classList.add('fade');
 });
-
 
