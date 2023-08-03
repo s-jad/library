@@ -75,6 +75,7 @@ function generateBookPlaceholders() {
 
 // Just to make it look like its already in use
 generateBookPlaceholders();
+populateBookGrid(myLibrary);
 
 function addBookToLibrary(title, author, description, pages, pagesRead) {
     const newBook = new Book(
