@@ -107,7 +107,7 @@ h3 {
 
 
 h4 {
-    font-size: clamp(14px, 1.4rem, 22px);
+    font-size: clamp(14px, 1.4rem, 20px);
 }
 
 button {
@@ -185,8 +185,7 @@ button {
     min-height: calc(60svh - 2rem);
     grid-template-rows: 1fr;
     grid-auto-rows: 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
     padding: max(8px, 1rem);
 }
@@ -245,21 +244,17 @@ button:focus-within {
     align-items: stretch;
     justify-content: stretch;
     padding: 1rem;
+    max-height: 400px;
 }
 
 .book-card > *:not(:first-child):not(:last-child) {
     margin-bottom: 1rem;
 }
 
-.book-title.collapsed {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .author {
     --txt-hue: var(--base-hue);
     color: hsla(var(--txt-hue), var(--fully-desaturated), var(--mid));
+    
     margin-left: 2rem;
 }
 
