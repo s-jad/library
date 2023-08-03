@@ -23,6 +23,8 @@ function displayMatches() {
 
         if (!match && currentlyDisplayedBooks.some((title) => title.innerText === bookTitle)) {
             // If not in matches and currently displayed, then remove from bookGrid
+            console.log(targetBook);
+            console.log(bookGrid);
             bookGrid.removeChild(targetBook);
         } else if (match && !currentlyDisplayedBooks.some((title) => title.innerText === bookTitle)) {
             // If in matches and not currently displayed, then append to bookGrid
@@ -31,7 +33,7 @@ function displayMatches() {
     });
 
     // If nothing is in the searchbar input, show all books
-    if (matches.length === 0 || searchBar.value === "") {
+    if (searchBar.value === "") {
         populateBookGrid(myLibrary);
     }
 }
