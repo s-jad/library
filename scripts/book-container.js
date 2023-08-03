@@ -76,6 +76,8 @@ function generateBookPlaceholders() {
 
 // Just to make it look like its already in use
 generateBookPlaceholders();
+
+// Populate the grid with users books on page load
 populateBookGrid(myLibrary);
 
 // Keeps track of the book-cards available to append/remove on search
@@ -111,8 +113,6 @@ function removeBookFromLibrary(title, author) {
     const booksIndex = books.findIndex(book => {
         const bookTitle = book.querySelector('.book-title').innerText;
         const bookAuthor = book.querySelector('.author').innerText;
-        console.log(`books array bookTitle => ${bookTitle}`);
-        console.log(`books array bookAuthor => ${bookAuthor}`);
         return bookTitle === title && bookAuthor === author;
     });
 

@@ -144,6 +144,7 @@ button {
     grid-template-columns: 5fr 1fr;
     margin: 1rem 1rem 0 1rem;
     padding: max(10px, 1rem);
+    padding-bottom: 0;
     border-radius: 1rem 1rem 0 0;
     width: 100%;
     height: 100%;
@@ -160,13 +161,9 @@ button {
 }
 
 #searchbar {
+    margin: 0 2rem 0 2rem;
     padding-left: 1rem;
-    margin: 0 3rem 0 1rem;
-}
-
-#checkin-buttons-flex {
-    display: flex;
-    gap: 1rem;
+    grid-column: 1 / 3;
 }
 
 /* BOOK CONTAINER */
@@ -201,7 +198,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2rem;
+    padding: 0 3rem 0 3rem;
 }
 
 #book-grid-title {
@@ -243,13 +240,15 @@ button:focus-within {
     background: hsl(var(--hue), var(--saturated), var(--light));
     border: 1px solid hsl(var(--hue), var(--desaturated), var(--dark));
     border-radius: 1rem;
-
-    height: 250px;
     display: grid;
     grid-template-rows: min-content;
     align-items: stretch;
     justify-content: stretch;
     padding: 1rem;
+}
+
+.book-card > *:not(:first-child):not(:last-child) {
+    margin-bottom: 1rem;
 }
 
 .book-title.collapsed {
@@ -261,7 +260,7 @@ button:focus-within {
 .author {
     --txt-hue: var(--base-hue);
     color: hsla(var(--txt-hue), var(--fully-desaturated), var(--mid));
-    padding-bottom: 1rem;
+    margin-left: 2rem;
 }
 
 .book-description.collapsed {
