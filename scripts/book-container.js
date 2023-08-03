@@ -3,6 +3,7 @@ import { updateProgressBar } from './progressbar.js';
 export let myLibrary = [];
 const bookGrid = document.getElementById('book-grid');
 
+
 function Book(title, author, description, pages, pagesRead) {
     this.title = title,
         this.author = author,
@@ -77,6 +78,10 @@ function generateBookPlaceholders() {
 generateBookPlaceholders();
 populateBookGrid(myLibrary);
 
+// Keeps track of the book-cards available to append/remove on search
+// exported to searchbar.js to allow use in searches
+export let books = Array.from(bookGrid.querySelectorAll('.book-card'));
+
 function addBookToLibrary(title, author, description, pages, pagesRead) {
     const newBook = new Book(
         title,
@@ -87,16 +92,33 @@ function addBookToLibrary(title, author, description, pages, pagesRead) {
     );
 
     myLibrary.push(newBook);
+
 };
 
 function removeBookFromLibrary(title, author) {
-    const bookIndex = myLibrary.findIndex(book => {
-        book.title === title && book.author === author
+    // Find index of book with this title and author in myLibrary
+    const libraryIndex = myLibrary.findIndex(book => {
+        return book.title === title && book.author === author;
     });
 
     // If findIndex can't find the book it returns -1
-    if (!bookIndex !== -1) {
-        myLibrary.splice(bookIndex, 1);
+    if (libraryIndex !== -1) {
+        myLibrary.splice(libraryIndex, 1);
+    }
+
+    // Find index of book-card with with specific book-title and book-author
+    // elements in books array
+    const booksIndex = books.findIndex(book => {
+        const bookTitle = book.querySelector('.book-title').innerText;
+        const bookAuthor = book.querySelector('.author').innerText;
+        console.log(`books array bookTitle => ${bookTitle}`);
+        console.log(`books array bookAuthor => ${bookAuthor}`);
+        return bookTitle === title && bookAuthor === author;
+    });
+
+    // Delete book-card at booksIndex
+    if (booksIndex !== - 1) {
+        books.splice(booksIndex, 1);
     }
 }
 
@@ -149,7 +171,6 @@ export function populateBookGrid(library) {
                 }
             });
         }
-
     });
 }
 
@@ -244,6 +265,10 @@ confirmAddBookBtn.addEventListener("click", function() {
 
     // Append the finished book card to the grid
     bookGrid.appendChild(bookCard);
+
+    // Add bookCard to books array
+    books.push(bookCard);
+    console.log(books);
 
     // Close the modal
     addBookModal.classList.remove('active');
